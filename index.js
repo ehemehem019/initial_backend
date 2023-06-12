@@ -37,6 +37,10 @@ const StockPrice = mongoose.model(
   "nestle_stock_prices"
 );
 
+app.get("/", (req, res) => {
+  res.send("Hello, welcome to the backend of our application");
+});
+
 app.get("/stockprices", (req, res) => {
   StockPrice.find({})
     .exec()
