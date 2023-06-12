@@ -4,20 +4,17 @@ const mongoose = require("mongoose");
 const app = express();
 const port = 3001;
 
-mongoose.connect(
-  "mongodb+srv://admin123:admin123@zuitt-bootcamp.cnhvgta.mongodb.net/nestle_stock_historical_price?retryWrites=true&w=majority",
-  {
-    useNewUrlParser: true,
-    useUnifiedTopology: true,
-  }
-);
+mongoose
+  .connect(
+    "mongodb+srv://admin123:admin123@zuitt-bootcamp.cnhvgta.mongodb.net/nestle_stock_historical_price?retryWrites=true&w=majority",
+    {
+      useNewUrlParser: true,
+      useUnifiedTopology: true,
+    }
+  )
+  .then(() => console.log("Connected to the cloud database"))
+  .catch((error) => console.error("Connection error:", error));
 
-let db = mongoose.connection;
-
-db.on("error", console.error.bind(console, "connection error"));
-db.once("open", () => console.log("We're connected to the cloud database"));
-
-// Schema
 const stockPriceSchema = new mongoose.Schema({
   Date: String,
   OpenPrice: Number,
@@ -34,7 +31,6 @@ const stockPriceSchema = new mongoose.Schema({
   SpreadCloseOpen: Number,
 });
 
-// Model
 const StockPrice = mongoose.model(
   "StockPrice",
   stockPriceSchema,
